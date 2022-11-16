@@ -23,11 +23,12 @@ jobs:
         elixir-version: '1.12.3' # Define the elixir version [required]
         otp-version: '24.1' # Define the OTP version [required]
 
-    - name: List added migrations
+    - name: Get added migrations
       id: added-migrations
       uses: tj-actions/changed-files@v34
       with:
         files: /priv/repo/migrations
+    - name: List added migrations
       run: |
         for file in ${{ steps.changed-files.outputs.added_files }}; do
           echo "$file was added"
