@@ -27,7 +27,7 @@ jobs:
       id: added-migrations
       uses: tj-actions/changed-files@v34
       with:
-        files: /priv/repo/migrations
+        files: /priv/repo/migrations 
     - name: List added migrations
       run: |
         for file in ${{ steps.changed-files.outputs.added_files }}; do
