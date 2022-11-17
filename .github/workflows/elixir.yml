@@ -33,6 +33,6 @@ jobs:
           COUNT=0
           for file in ${{ steps.migration-files.outputs.all_changed_files }}; do
             COUNT=$((COUNT + 1))
-            echo "$file was changed"
+            echo "$file was added"
           done
           echo $COUNT
