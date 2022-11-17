@@ -1,31 +1,32 @@
-name: Elixir CI
+name: CI
 
 on:
+  # Compare the preceeding commit of main -> to the current commit of the main branch.
+  # (Note: To compare changes between the last pushed commit to the remote main branch set `since_last_remote_commit: true`)
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+  # Compare the last commit of main -> to the current commit of a PR branch. 
+  # (Note: To compare changes between the last pushed commit to the remote PR branch set `since_last_remote_commit: true`)
   pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches:
+      - main
 
 jobs:
   build:
-
-    name: Build and test
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest  # windows-latest | macos-latest
+    name: Test changed-files
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Elixir
-      uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-      with:
-        elixir-version: '1.12.3' # Define the elixir version [required]
-        otp-version: '24.1' # Define the OTP version [required]
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
-      - name: Get changed files
-        id: changed-files
+      - name: Get added files in the docs folder
+        id: migrations-files-specific
         uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            priv/repo/migrations/**
 
       - name: List all changed files
         run: |
