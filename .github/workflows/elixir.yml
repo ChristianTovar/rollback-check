@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
       - name: Get added files in the docs folder
-        id: migrations-files-specific
+        id: migration-files
         uses: tj-actions/changed-files@v34
         with:
           files: |
@@ -30,6 +30,6 @@ jobs:
 
       - name: List all changed files
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          for file in ${{ steps.migration-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
