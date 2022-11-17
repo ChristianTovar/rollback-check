@@ -33,3 +33,4 @@ jobs:
           for file in ${{ steps.migration-files.outputs.all_changed_files }}; do
             echo "$file was changed"
           done
+          echo ${#steps.migration-files.outputs.all_changed_files[@]}
