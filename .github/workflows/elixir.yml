@@ -23,24 +23,12 @@ jobs:
         elixir-version: '1.12.3' # Define the elixir version [required]
         otp-version: '24.1' # Define the OTP version [required]
 
-    - name: Get added migrations
-      id: added-migrations
-      uses: tj-actions/changed-files@v34
-      with:
-        files: /priv/repo/migrations 
-    - name: List added migrations
-      run: |
-        for file in ${{ steps.changed-files.outputs.added_files }}; do
-          echo "$file was added"
-        done
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
 
-    - name: Restore dependencies cache
-      uses: actions/cache@v3
-      with:
-        path: deps
-        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Run tests
-      run: mix test
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
